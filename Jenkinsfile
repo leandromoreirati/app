@@ -75,7 +75,8 @@ pipeline {
           } */
 
           script{
-            COMMIT_HASH = sh(returnStdout: true, script: "git log --pretty=format:%h -n 1").trim();
+            COMMIT_HASH = sh(returnStdout: true, script: "git log --pretty=format:%h -n 1")
+            echo "${COMMIT_HASH}"
           }
 
           // Obtendo a versão da aplicação a partir do pom.xml
@@ -87,14 +88,14 @@ pipeline {
         }
       }
     }
-    stage('Analyze Code') {
+    /* stage('Analyze Code') {
       steps{
         dir("${WORKSPACE_DIR}/app/"){
           echo "====> Analisando o código fonte da aplicação web com o SonarQube..."
           sh "./mvnw clean package sonar:sonar -Dsonar.host.url=${URL_SONARQUBE} ; "
         }
       }
-    }
+    } */
     stage('Build App') {
       steps{
         dir("${WORKSPACE_DIR}/app/"){
