@@ -1,0 +1,117 @@
+	
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Profile</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+	<link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
+	<link th:href="@{/css/plugins/chosen/bootstrap-chosen.css}" rel="stylesheet" />
+	<link th:href="@{/css/plugins/toastr/toastr.min.css}" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"></link>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="panel panel-info">
+        <div class="panel-heading">
+            <strong>Livro Jenkins - Aplicação Java - Spring Boot</strong>
+        </div>
+        
+        <div class="panel-body">
+            <div class="table-responsive">
+            	Integração Contínua com Jenkins
+            </div>
+        </div>
+        
+     </div>
+  
+
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <strong>Profile Listing</strong>
+        </div>
+        
+        <div class="panel-footer">
+            <a class="btn btn-sm btn-success" th:href="@{/add/}" >New</a>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-sm table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>E-mail</th>
+                            <th>Age</th>
+                            <th>Postal Code</th>
+                            <th>IP</th>
+                            <th style="text-align: center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="profile : ${profiles}">
+                            <td th:text="${profile.id}"></td>
+                            <td th:text="${profile.name}"></td>
+                            <td th:text="${profile.email}"></td>
+                            <td th:text="${profile.age}"></td>
+                            <td th:text="${profile.postalCode}"></td>
+                            <td th:text="${profile.ipAddress}"></td>
+                            <td style="text-align: center">
+                                <div class="btn-group">
+                                    <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${profile.id})}" >Edit</a>
+                                    <a class="delete btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${profile.id})}">Delete</a>
+                               </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+     
+    </div>
+    
+    
+    <!--/* Mainly scripts */-->
+	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/plugins/toastr/toastr.min.js}"></script>
+
+
+
+	<script th:inline="javascript">
+	
+		$(document).ready(function(){		
+			loadToastr();
+		});
+		
+		function loadToastr( feedback ){
+			var optionsToastr = {
+					closeButton: true,
+					debug: false,
+					progressBar: true,
+					preventDuplicates: false,
+					timeOut: "7000",
+					showEasing: "swing",
+					hideEasing: "linear",
+					showMethod: "fadeIn",
+					hideMethod: "fadeOut",
+					onclick: null
+				};
+
+			var mensagens = [[${feedback}]];
+			if( mensagens == null && feedback != null ){
+				mensagens = feedback;
+			}
+
+			$.each( mensagens, function( i, v ){
+				var type = i, arr = v;
+				$.each( arr, function( a, msg ){
+					toastr[type]( msg, null, optionsToastr );
+				})
+			});
+		}
+	</script>
+</body>
+</html>
