@@ -34,6 +34,7 @@ pipeline {
     // 'null', significa que variável será iniciada com o valor nulo (vazio)
     LAST_TAG_APP = null
     VERSAO_APP   = null
+    COMMIT_HASH = null
 
     // Aspas simples servem para unificar o texto.
     WORKSPACE_DIR         = pwd()
@@ -41,13 +42,13 @@ pipeline {
     URL_SONARQUBE         = 'http://192.168.0.25:9000'
     APPLIVRO_DOWNLOAD_URL = 'http://192.168.0.25:8081/repository/app/'
     DOCKER_REGISTRY       = 'index.docker.io'
-    DOCKER_REPOSITORY     = "app_livro_jenkins"
+    DOCKER_REPOSITORY     = "app"
     PROJECT               = 'app'
     DIR_TMP               = '/tmp'
     DEPLOY_ENV            = 'prod'
     SENDER                = 'jenkins@domain.com.br'
-    MAIL_SYSADMIN         = 'livro@domain.com.br'
-    MAIL_TEAM             = 'livro@domain.com.br'
+    MAIL_SYSADMIN         = 'app@domain.com.br'
+    MAIL_TEAM             = 'app@domain.com.br'
   }
 
   stages {
@@ -69,8 +70,12 @@ pipeline {
             url: "${URL_GIT}"
 
           // Obtendo a tag atual para uso neste ciclo
-          script{
+          /* script{
             LAST_TAG_APP = sh(returnStdout: true, script: "git describe --tags `git rev-list --tags --max-count=1`").trim();
+          } */
+
+          script{
+            COMMIT_HASH = sh(returnStdout: true, script: "git log --pretty=format:%h -n 1").trim();
           }
 
           // Obtendo a versão da aplicação a partir do pom.xml
