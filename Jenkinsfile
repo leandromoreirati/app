@@ -24,7 +24,7 @@ pipeline {
 
   // A seção 'agent' define o nome do node cadastrado no Jenkins que
   // deverá executar o pipeline
-  agent { label 'node-ubuntu'}
+  agent { label 'master'}
 
   // A seção 'environment' contém a declaração de variáveis usadas no pipeline
   environment {
@@ -37,12 +37,12 @@ pipeline {
 
     // Aspas simples servem para unificar o texto.
     WORKSPACE_DIR         = pwd()
-    URL_GIT               = 'http://ci-server.domain.com.br/root/applivro-jenkins.git'
-    URL_SONARQUBE         = 'http://ci-server.domain.com.br:9000'
-    APPLIVRO_DOWNLOAD_URL = 'http://ci-server.domain.com.br:8081/repository/empresa_teste/com/domain/applivro/'
+    URL_GIT               = 'https://github.com/leandromoreirati/app.git'
+    URL_SONARQUBE         = 'http://192.168.0.25:9000'
+    APPLIVRO_DOWNLOAD_URL = 'http://192.168.0.25:8081/repository/app/'
     DOCKER_REGISTRY       = 'index.docker.io'
     DOCKER_REPOSITORY     = "app_livro_jenkins"
-    PROJECT               = 'applivro'
+    PROJECT               = 'app'
     DIR_TMP               = '/tmp'
     DEPLOY_ENV            = 'prod'
     SENDER                = 'jenkins@domain.com.br'
