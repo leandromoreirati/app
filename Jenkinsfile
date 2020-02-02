@@ -108,7 +108,7 @@ pipeline {
         }
       }
     }
-    stage('Build Docker Image') {
+    /* stage('Build Docker Image') {
       steps {
         // Gerando a imagem Docker para a última versão do microsserviço
         echo "====> Gerando a imagem Docker do APP '${VERSAO_APP}'..."
@@ -169,7 +169,7 @@ pipeline {
              \n currentBuild.currentResult: ${currentBuild.currentResult} \
              \n currentBuild.durationString: ${currentBuild.durationString} "
       }
-    }
+    } */
     stage('Results') {
       steps {
         echo 'Fim do Pipeline... Foi gerado o pacote da aplicação com as seguintes informações'
